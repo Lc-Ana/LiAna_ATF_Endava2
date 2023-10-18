@@ -9,8 +9,8 @@ public class LoginSteps {
     public void user_is_on_login_page() {
 
     }
-    @When("he enter username and password")
-    public void he_enter_username_and_password() {
+    @When("he enter {} and {}}")
+    public void he_enter_username_and_password(String username, String password) {
 
     }
     @When("clicks on login button")
