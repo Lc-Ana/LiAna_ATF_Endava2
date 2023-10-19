@@ -7,3 +7,5 @@ Feature: User is able to login
       | Lili@gmail.com | lili123 |
     And clicks on login button
     Then is redirected to DashboardPage
+
+

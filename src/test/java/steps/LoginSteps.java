@@ -5,9 +5,13 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import managers.FileReaderManager;
 import pageObjects.LoginPage;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class LoginSteps {
     TestContext testContext;
@@ -32,16 +36,6 @@ public class LoginSteps {
     @When("clicks on login button")
     public void clicks_on_login_button() {
         loginPage.clickLoginButton();
-    }
-
-    @Then("is redirected to DashboardPage")
-    public void is_redirected_to_dashboard_page() {
-
-    }
-
-    @When("clicks on logout button")
-    public void clicks_on_logout_button() {
-
     }
 
     @Then("is redirected to LoginPage")
