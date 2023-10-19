@@ -6,6 +6,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import managers.FileReaderManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import pageObjects.DashboardPage;
 
@@ -15,6 +17,7 @@ import java.util.Map;
 public class DashboardSteps {
     TestContext testContext;
     DashboardPage dashboardPage;
+    private static final Logger logger = LogManager.getLogger(DashboardSteps.class);
 
     public DashboardSteps(TestContext context) {
         testContext = context;
@@ -23,6 +26,7 @@ public class DashboardSteps {
 
     @When("clicks on logout button")
     public void clicks_on_logout_button() {
+        logger.info("User clicks on login button");
         dashboardPage.clickLogoutButton();
     }
 
@@ -31,6 +35,7 @@ public class DashboardSteps {
         String expectedResult = FileReaderManager.getInstance().getConfigReader().getDashboardURLEndpoint();
         Thread.sleep(1000);
         String actualResult = testContext.getWebDriverManager().getDriver().getCurrentUrl();
+        logger.info("User is redirected to Dashboard page");
         Assertions.assertTrue(actualResult.contains(expectedResult),"User is NOT on Dashboard Page");
     }
 
