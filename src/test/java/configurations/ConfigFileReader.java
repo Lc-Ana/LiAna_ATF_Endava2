@@ -1,6 +1,7 @@
 package configurations;
 
 import enums.DriverType;
+import pageObjects.DashboardPage;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,7 +26,7 @@ public class ConfigFileReader {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new RuntimeException("Configuration.properties  not found " + propertyFilePath);
+            throw new RuntimeException("Config.properties  not found " + propertyFilePath);
         }
     }
 
@@ -33,14 +34,14 @@ public class ConfigFileReader {
         String driverPath = properties.getProperty("driverPath");
         if (driverPath != null) return driverPath;
         else
-            throw new RuntimeException("Driver Path not specified in the Configuration.properties file for the Key:driverPath");
+            throw new RuntimeException("Driver Path not specified in the Config.properties file for the Key:driverPath");
     }
 
     public String getApplicationUrl() {
         String url = properties.getProperty("url");
         if (url != null) return url;
         else
-            throw new RuntimeException("Application Url not specified in the Configuration.properties file for the key : url");
+            throw new RuntimeException("Application Url not specified in the Config.properties file for the key : url");
     }
 
     public DriverType getBrowser() {
@@ -48,7 +49,7 @@ public class ConfigFileReader {
         if (browserName == null || browserName.equals("chrome")) return DriverType.CHROME;
             //else if (browserName.equalsIgnoreCase("firefox")) return  DriverType.FIREFOX ;
         else
-            throw new RuntimeException("Browser Name key value in Configuration.properties is not matched:  " + browserName);
+            throw new RuntimeException("Browser Name key value in Config.properties is not matched:  " + browserName);
     }
 
     public Boolean getBrowserWindowSize() {
@@ -67,6 +68,13 @@ public class ConfigFileReader {
             }
         }
         return 35;
+    }
+
+    public String getDashboardURLEndpoint(){
+        String dashboardURLEndpoint = properties.getProperty("dashboardURLEndpoint");
+        if (dashboardURLEndpoint != null) return dashboardURLEndpoint;
+        else
+            throw new RuntimeException("Dashboard Url not specified in the Config.properties file for the key : dashboardURL");
     }
 
 }
