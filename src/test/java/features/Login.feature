@@ -6,6 +6,4 @@ Feature: User is able to login
     When he enters credentials
       | Lili@gmail.com | lili123 |
     And clicks on login button
-    Then is redirected to DashboardPage
-
-
+    Then user is redirected to DashboardPage

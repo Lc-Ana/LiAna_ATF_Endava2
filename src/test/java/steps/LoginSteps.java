@@ -40,9 +40,10 @@ public class LoginSteps {
         loginPage.clickLoginButton();
     }
 
-    @Then("is redirected to LoginPage")
-    public void is_redirected_to_login_page() {
-
+    @Then("user is redirected on LoginPage")
+    public void isRedirectedToLoginPage() {
+        logger.info("User is redirected on LoginPage");
+        testContext.getWebDriverManager().getDriver().getCurrentUrl();
     }
 
 }
