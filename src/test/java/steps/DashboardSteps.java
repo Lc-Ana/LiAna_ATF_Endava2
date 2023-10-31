@@ -30,7 +30,7 @@ public class DashboardSteps {
         dashboardPage.clickLogoutButton();
     }
 
-    @Then("is redirected to DashboardPage")
+    @Then("user is redirected to DashboardPage")
     public void is_redirected_to_dashboard_page() throws Exception {
         String expectedResult = FileReaderManager.getInstance().getConfigReader().getDashboardURLEndpoint();
         Thread.sleep(1000);
