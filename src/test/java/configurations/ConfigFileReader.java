@@ -1,7 +1,6 @@
 package configurations;
 
 import enums.DriverType;
-import pageObjects.DashboardPage;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

@@ -1,8 +1,6 @@
 package steps;
 
 import cucumber.TestContext;
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import managers.FileReaderManager;
@@ -10,9 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import pageObjects.DashboardPage;
-
-import java.util.List;
-import java.util.Map;
 
 public class DashboardSteps {
     TestContext testContext;
