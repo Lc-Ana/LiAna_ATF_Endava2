@@ -1,4 +1,4 @@
-package hooks;
+package steps;
 
 import cucumber.TestContext;
 import io.cucumber.java.After;
