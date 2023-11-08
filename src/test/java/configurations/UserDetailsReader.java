@@ -21,8 +21,14 @@ public class UserDetailsReader {
         String jSonString = FileUtils.readFileToString(new File("src/test/resources/RegistrationTestData.json"), StandardCharsets.UTF_8);
         Object obj = parser.parse(jSonString);
         JSONObject jsonObject = (JSONObject) obj;
-        JSONArray UserJsonArray = (JSONArray) jsonObject.get("rows");
-        User user = objectMapper.readValue(UserJsonArray.get(1).toString(), User.class);
+        JSONObject jsonObjectNew = (JSONObject) obj;
+        JSONArray userJsonArray = (JSONArray) jsonObject.get("rows");
+
+        User user = objectMapper.readValue(userJsonArray.get(0).toString(), User.class);
+        userJsonArray.remove(0);
+        jsonObjectNew.put("rows", userJsonArray);
+        FileUtils.writeStringToFile(new File("src/test/resources/RegistrationTestData.json"), jsonObjectNew.toJSONString(), StandardCharsets.UTF_8);
+
         return user;
     }
 
