@@ -1,9 +1,13 @@
 package pageObjects;
 
+import managers.FileReaderManager;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.io.IOException;
 
 public class RegistrationPage {
 
@@ -28,11 +32,11 @@ public class RegistrationPage {
     private WebElement cancelButton;
 
 
-    public void fillTheForm() {
-        firstNameInput.sendKeys("Iurie");
-        lastNameInput.sendKeys("Kiritop");
-        emailInput.sendKeys("ikiritop04@gmail.com");
-        passwordInput.sendKeys("kiritop2023");
+    public void fillTheForm() throws IOException, ParseException {
+        firstNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getFirstName());
+        lastNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getLastName());
+        emailInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getEmail());
+        passwordInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getPassword());
     }
 
     public void submitButton() {
