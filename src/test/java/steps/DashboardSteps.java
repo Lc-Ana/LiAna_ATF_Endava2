@@ -1,13 +1,19 @@
 package steps;
 
 import cucumber.TestContext;
+import enums.Context;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import managers.FileReaderManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Assertions;
 import pageObjects.DashboardPage;
+import pageObjects.LoginPage;
+
+import java.io.IOException;
 
 public class DashboardSteps {
     TestContext testContext;
@@ -34,4 +40,11 @@ public class DashboardSteps {
         Assertions.assertTrue(actualResult.contains(expectedResult),"User is NOT on Dashboard Page");
     }
 
+
+    @When("he fills up <all fields> with the <values>")
+    public void heFillsUpAllFieldsWithTheValues() throws InterruptedException, IOException, ParseException {
+        dashboardPage.clickAddNewContactButton();
+        dashboardPage.fillContactForm();
+        dashboardPage.submitContactForm();
+    }
 }

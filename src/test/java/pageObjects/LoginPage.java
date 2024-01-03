@@ -23,6 +23,8 @@ public class LoginPage {
 
     @FindBy(id = "signup")
     private WebElement submitButton;
+    @FindBy(id = "error")
+    private WebElement loginError;
 
 
     private void enterUser(String user) {
@@ -52,5 +54,9 @@ public class LoginPage {
 
     public void clickOnSubmitButton(){
         submitButton.click();
+    }
+
+    public WebElement getLoginError() {
+        return loginError;
     }
 }
