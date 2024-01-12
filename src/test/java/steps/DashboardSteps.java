@@ -1,9 +1,7 @@
 package steps;
 
 import cucumber.TestContext;
-import enums.Context;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import managers.FileReaderManager;
@@ -12,9 +10,14 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Assertions;
 import pageObjects.DashboardPage;
-import pageObjects.LoginPage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DashboardSteps {
     TestContext testContext;
@@ -38,7 +41,7 @@ public class DashboardSteps {
         Thread.sleep(1000);
         String actualResult = testContext.getWebDriverManager().getDriver().getCurrentUrl();
         logger.info("User is redirected to Dashboard page");
-        Assertions.assertTrue(actualResult.contains(expectedResult),"User is NOT on Dashboard Page");
+        Assertions.assertTrue(actualResult.contains(expectedResult), "User is NOT on Dashboard Page");
     }
 
 
@@ -47,15 +50,19 @@ public class DashboardSteps {
         dashboardPage.clickAddNewContactButton();
         logger.info("Filling the contact form");
         dashboardPage.fillContactForm();
-        logger.info("Filling the contact form");
         dashboardPage.submitContactForm();
     }
 
     @Then("the table contains the following details")
-    public void verifyTheTableDetails() {
-        int rowNumbers = dashboardPage.getTheDataRowsOfTheTable();
-        logger.info("Row Numbers " + rowNumbers);
+    public void verifyTheTableDetails(DataTable expectedRowData) {
+        logger.info("getting actual row data... ");
+        List<String> actualRowData = dashboardPage.getRowData();
 
+        List<List<String>> tableValues = expectedRowData.asLists();
+        List<String> expectedValues = tableValues.get(0);
+
+        logger.info("asserting row data... ");
+        assertEquals(expectedValues, actualRowData);
     }
 
 }

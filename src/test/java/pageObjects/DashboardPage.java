@@ -2,13 +2,13 @@ package pageObjects;
 
 import managers.FileReaderManager;
 import org.json.simple.parser.ParseException;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardPage {
@@ -46,8 +46,12 @@ public class DashboardPage {
     private WebElement submitButton;
     @FindBy(id = "cancel")
     private WebElement cancelButton;
-    @FindBy(className = "contacts")
+    @FindBy(className = "contactTable")
     private WebElement table;
+    @FindBy(className = "contactTableHead")
+    private WebElement headerRow;
+    @FindBy(xpath = "//*[@id=\"myTable\"]/tr[1]/td") //*[@id="myTable"]/tr
+    private List<WebElement> tableRows;
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -89,9 +93,13 @@ public class DashboardPage {
         submitButton.click();
     }
 
-    public int getTheDataRowsOfTheTable(){
-        List<WebElement> dataRows = table.findElement(By.tagName("tbody")).findElements(By.tagName("tr")).stream().toList();
-        return dataRows.size();
-    }
+    public List<String> getRowData() {
+        List<String> data = new ArrayList<>();
 
+        for (WebElement element : tableRows) {
+            data.add(element.getText());
+        }
+
+        return data;
+    }
 }
