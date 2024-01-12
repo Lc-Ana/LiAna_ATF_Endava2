@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 
 public class UserDetailsReader {
-    ObjectMapper objectMapper = new ObjectMapper();
-    JSONParser parser = new JSONParser();
+    static ObjectMapper objectMapper = new ObjectMapper();
+    static JSONParser parser = new JSONParser();
 
     public User getUserForRegistration() throws IOException, ParseException {
 
@@ -32,7 +32,7 @@ public class UserDetailsReader {
         return user;
     }
 
-    public Contacts getContactDetails() throws IOException, ParseException {
+    public static Contacts getContactDetails() throws IOException, ParseException {
 
         String jSonString = FileUtils.readFileToString(new File("src/test/resources/ContactsTestData.json"), StandardCharsets.UTF_8);
         Object obj = parser.parse(jSonString);
@@ -47,6 +47,10 @@ public class UserDetailsReader {
         FileUtils.writeStringToFile(new File("src/test/resources/ContactsTestData.json"), jsonObjectNew.toJSONString(), StandardCharsets.UTF_8);
 
         return contact;
+    }
+
+    public static void main(String[] args) throws IOException, ParseException {
+        String r = getContactDetails().toString();
     }
 
 }

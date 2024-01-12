@@ -2,12 +2,14 @@ package pageObjects;
 
 import managers.FileReaderManager;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class DashboardPage {
     WebDriver driver;
@@ -44,6 +46,8 @@ public class DashboardPage {
     private WebElement submitButton;
     @FindBy(id = "cancel")
     private WebElement cancelButton;
+    @FindBy(className = "contacts")
+    private WebElement table;
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -70,19 +74,24 @@ public class DashboardPage {
     public void fillContactForm() throws IOException, ParseException {
         firstNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getFirstName());
         lastNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getLastName());
-        birthDateInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getDateOfBirth());
+        birthDateInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getDate());
         emailInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getEmail());
         phoneInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getPhone());
-        street1Input.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getStreetAddress1());
-        street2Input.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getStreetAddress2());
+        street1Input.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getAddress1());
+        street2Input.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getAddress2());
         cityInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getCity());
-        stateInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getState());
-        postalCodeInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getPostalCode());
+        stateInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getProvince());
+        postalCodeInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getPostal());
         countryInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getContactDetails().getCountry());
     }
 
-    public void submitContactForm() {
+    public void submitContactForm() throws InterruptedException {
         submitButton.click();
+    }
+
+    public int getTheDataRowsOfTheTable(){
+        List<WebElement> dataRows = table.findElement(By.tagName("tbody")).findElements(By.tagName("tr")).stream().toList();
+        return dataRows.size();
     }
 
 }

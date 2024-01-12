@@ -2,6 +2,7 @@ package steps;
 
 import cucumber.TestContext;
 import enums.Context;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -41,10 +42,20 @@ public class DashboardSteps {
     }
 
 
-    @When("he fills up <all fields> with the <values>")
-    public void heFillsUpAllFieldsWithTheValues() throws InterruptedException, IOException, ParseException {
+    @When("he fills up a contact form")
+    public void heFillsUpContactForm() throws IOException, ParseException, InterruptedException {
         dashboardPage.clickAddNewContactButton();
+        logger.info("Filling the contact form");
         dashboardPage.fillContactForm();
+        logger.info("Filling the contact form");
         dashboardPage.submitContactForm();
     }
+
+    @Then("the table contains the following details")
+    public void verifyTheTableDetails() {
+        int rowNumbers = dashboardPage.getTheDataRowsOfTheTable();
+        logger.info("Row Numbers " + rowNumbers);
+
+    }
+
 }
