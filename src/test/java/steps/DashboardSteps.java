@@ -45,7 +45,7 @@ public class DashboardSteps {
     }
 
 
-    @When("he fills up a contact form")
+    @When("he fills up the contact form")
     public void heFillsUpContactForm() throws IOException, ParseException, InterruptedException {
         dashboardPage.clickAddNewContactButton();
         logger.info("Filling the contact form");
