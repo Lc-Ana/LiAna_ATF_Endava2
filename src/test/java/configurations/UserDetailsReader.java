@@ -13,10 +13,10 @@ import java.nio.charset.StandardCharsets;
 
 
 public class UserDetailsReader {
-    public User getUser() throws IOException, ParseException {
+    static ObjectMapper objectMapper = new ObjectMapper();
+    static JSONParser parser = new JSONParser();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JSONParser parser = new JSONParser();
+    public User getUserForRegistration() throws IOException, ParseException {
 
         String jSonString = FileUtils.readFileToString(new File("src/test/resources/RegistrationTestData.json"), StandardCharsets.UTF_8);
         Object obj = parser.parse(jSonString);
@@ -30,6 +30,27 @@ public class UserDetailsReader {
         FileUtils.writeStringToFile(new File("src/test/resources/RegistrationTestData.json"), jsonObjectNew.toJSONString(), StandardCharsets.UTF_8);
 
         return user;
+    }
+
+    public static Contacts getContactDetails() throws IOException, ParseException {
+
+        String jSonString = FileUtils.readFileToString(new File("src/test/resources/ContactsTestData.json"), StandardCharsets.UTF_8);
+        Object obj = parser.parse(jSonString);
+        JSONObject jsonObject = (JSONObject) obj;
+        JSONObject jsonObjectNew = (JSONObject) obj;
+        JSONArray userJsonArray = (JSONArray) jsonObject.get("rows");
+
+        Contacts contact = objectMapper.readValue(userJsonArray.get(0).toString(), Contacts.class);
+        jsonObjectNew.remove(0);
+        jsonObjectNew.put("rows", userJsonArray);
+
+        FileUtils.writeStringToFile(new File("src/test/resources/ContactsTestData.json"), jsonObjectNew.toJSONString(), StandardCharsets.UTF_8);
+
+        return contact;
+    }
+
+    public static void main(String[] args) throws IOException, ParseException {
+        String r = getContactDetails().toString();
     }
 
 }

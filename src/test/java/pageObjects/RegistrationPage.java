@@ -33,10 +33,10 @@ public class RegistrationPage {
 
 
     public void fillTheForm() throws IOException, ParseException {
-        firstNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getFirstName());
-        lastNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getLastName());
-        emailInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getEmail());
-        passwordInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUser().getPassword());
+        firstNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUserForRegistration().getFirstName());
+        lastNameInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUserForRegistration().getLastName());
+        emailInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUserForRegistration().getEmail());
+        passwordInput.sendKeys(FileReaderManager.getInstance().getUserDetailsReader().getUserForRegistration().getPassword());
     }
 
     public void submitButton() {

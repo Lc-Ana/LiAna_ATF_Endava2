@@ -5,8 +5,10 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import managers.FileReaderManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
 import pageObjects.LoginPage;
 
 import java.util.List;
@@ -28,10 +30,10 @@ public class LoginSteps {
     }
 
     @When("he enters credentials")
-    public void he_enters_credentials(DataTable table) {
+    public void entersCredentials(DataTable table) {
         List<List<String>> data = table.asLists();
         logger.info("User enters credentials");
-        loginPage.fillUsernamePasswordForm(data.get(0).get(0),data.get(0).get(1));
+        loginPage.fillUsernamePasswordForm(data.get(0).get(0), data.get(0).get(1));
     }
 
     @When("clicks on login button")
@@ -46,4 +48,30 @@ public class LoginSteps {
         testContext.getWebDriverManager().getDriver().getCurrentUrl();
     }
 
+    @When("he enters invalid {} or {}")
+    public void enterInvalidCredentials(String username, String password) throws InterruptedException{
+        logger.info("User enters invalid credentials");
+        loginPage.fillUsernamePasswordForm(username, password);
+        loginPage.clickLoginButton();
+        Thread.sleep(1000);
+    }
+
+    @Then("user receives an error")
+    public void userReceivesAnError()  {
+        String expectedLoginError = "Incorrect username or password";
+        String actualLoginError = loginPage.getLoginError().getText();
+        logger.info("User receives an error.");
+        Assertions.assertEquals(actualLoginError, expectedLoginError, "Error messages do not match.");
+    }
+
+    @Given("user is logged in")
+    public void userIsLogged() throws InterruptedException {
+        logger.info("User is logged in the app");
+        loginPage.navigateToLoginPage();
+        loginPage.fillUsernamePasswordForm(FileReaderManager.getInstance().getConfigReader().getUser(),
+                FileReaderManager.getInstance().getConfigReader().getPassword() );
+        loginPage.clickLoginButton();
+        Thread.sleep(1000);
+
+    }
 }

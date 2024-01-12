@@ -1,6 +1,7 @@
 package steps;
 
 import cucumber.TestContext;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,5 +40,4 @@ public class RegistrationSteps {
         logger.info("User clicks on Submit Button");
         registrationPage.submitButton();
     }
-
 }

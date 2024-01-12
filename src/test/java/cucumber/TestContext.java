@@ -6,10 +6,12 @@ import managers.WebDriverManager;
 public class TestContext {
     private WebDriverManager webDriverManager;
     private PageObjectsManager pageObjectsManager;
+    public ScenarioContext scenarioContext;
 
     public TestContext(){
         webDriverManager = new WebDriverManager();
         pageObjectsManager = new PageObjectsManager(webDriverManager.getDriver());
+        scenarioContext = new ScenarioContext();
     }
 
     public WebDriverManager getWebDriverManager(){
@@ -19,4 +21,9 @@ public class TestContext {
     public PageObjectsManager getPageObjectManager(){
         return pageObjectsManager;
     }
+
+    public ScenarioContext getScenarioContext() {
+        return scenarioContext;
+    }
+
 }
