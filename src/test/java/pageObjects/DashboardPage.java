@@ -2,6 +2,7 @@ package pageObjects;
 
 import managers.FileReaderManager;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DashboardPage {
     WebDriver driver;
@@ -50,8 +53,10 @@ public class DashboardPage {
     private WebElement table;
     @FindBy(className = "contactTableHead")
     private WebElement headerRow;
-    @FindBy(xpath = "//*[@id=\"myTable\"]/tr[1]/td") //*[@id="myTable"]/tr
+    @FindBy(className = "contactTableBodyRow")
     private List<WebElement> tableRows;
+//    @FindBy(xpath = "//*[@id=\"myTable\"]/tr/td")
+//    private List<List<WebElement>> tableRowsData;
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -94,12 +99,21 @@ public class DashboardPage {
     }
 
     public List<String> getRowData() {
-        List<String> data = new ArrayList<>();
 
-        for (WebElement element : tableRows) {
-            data.add(element.getText());
-        }
+        List<String> rowTxt = new ArrayList<>();
 
-        return data;
+        List<WebElement> allRows = table.findElements(By.tagName("tr"));
+
+        WebElement rowElement = allRows.get(allRows.size() - 1);
+            List<WebElement> cols = rowElement.findElements(By.tagName("td"));
+
+        for(WebElement cell : cols) {
+                rowTxt.add(cell.getText());
+            }
+
+        rowTxt.remove(0);
+
+        return rowTxt;
+
     }
 }
