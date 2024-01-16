@@ -1,6 +1,7 @@
-package enums;
+package cucumber;
 
-public enum Context {
+public enum DataKeys implements Key {
+    USER,
     TEXT,
     FIRST_NAME,
     LAST_NAME,
@@ -12,5 +13,7 @@ public enum Context {
     CITY,
     STATE,
     POSTAL_CODE,
-    COUNTRY;
+    COUNTRY,
+    LOGIN,
+    LOGOUT
 }
