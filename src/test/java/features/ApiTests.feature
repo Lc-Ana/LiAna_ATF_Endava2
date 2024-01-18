@@ -1,15 +1,14 @@
 @API @Test
 Feature: API Tests
 
-  Scenario: Create User
+  Scenario: User is able to create an account
     Given user sent a POST request to ADD_USER endpoint
     Then an account is created successfully
 
-  Scenario: Login with the user created previously
+  Scenario: User is able to login into the app and logout from the app
     Given user sent a POST request to LOGIN_USER endpoint
-    Then user is logged in successfully
-
-  Scenario: Logout with the user created previously
-    Given user is authenticated in the app using LOGIN_USER endpoint
+    And user is logged in successfully
     When user sends a POST request to LOGOUT_USER endpoint
     Then user is logged out successfully
+
+#TO DO refactor the tests, login logout to be together Given request sent And user authenticated When logout Then logout successfully

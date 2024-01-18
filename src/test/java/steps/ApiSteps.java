@@ -2,7 +2,6 @@ package steps;
 
 import api.ApiEndpoint;
 import cucumber.TestContext;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,10 +32,8 @@ public class ApiSteps {
             "  \"email\": \"tuser1@gmail.com\",\n" +
             "  \"password\": \"testuser1*\" \n  }";
 
-    @Given("user is authenticated in the app using {} endpoint")
     @Given("user sent a POST request to {} endpoint")
     @When("user sends a POST request to {} endpoint")
-    @And("user is able to login in the account using {} endpoint")
     public void userSendsAPOSTRequestToEndpoint(ApiEndpoint endpoint) {
         switch (endpoint) {
             case ADD_USER: {
