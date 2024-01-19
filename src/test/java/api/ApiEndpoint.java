@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum ApiEndpoint {
 
     ADD_USER("/users"),
-    GET_USER("/users/me"),
+    GET_USER_PROFILE("/users/me"),
+    UPDATE_USER("/users/me"),
     LOGIN_USER("/users/login"),
     LOGOUT_USER("/users/logout"),
     DELETE_USER("/users/me"),

@@ -2,6 +2,7 @@ package steps;
 
 import api.ApiEndpoint;
 import cucumber.TestContext;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import static cucumber.DataKeys.*;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ApiSteps {
 
@@ -31,9 +33,13 @@ public class ApiSteps {
     private static String requestBodyForLoginLogout = "{\n" +
             "  \"email\": \"tuser1@gmail.com\",\n" +
             "  \"password\": \"testuser1*\" \n  }";
+    private static String requestBodyForUpdateUSer = "{\n" +
+            "  \"firstName\": \"testtest\" \n  }";
 
     @Given("user sent a POST request to {} endpoint")
+    @Given("user sends a GET request to {} endpoint")
     @When("user sends a POST request to {} endpoint")
+    @And("user sends an UPDATE request to {} endpoint")
     public void userSendsAPOSTRequestToEndpoint(ApiEndpoint endpoint) {
         switch (endpoint) {
             case ADD_USER: {
@@ -62,9 +68,10 @@ public class ApiSteps {
             case LOGOUT_USER: {
                 Response loginResponse = (Response) testContext.scenarioContext.getContext(LOGIN);
                 String accessToken = loginResponse.jsonPath().getString("token");
+                testContext.scenarioContext.setContext(TOKEN, accessToken);
+
                 Response logoutResponse = given()
                         .header("Authorization", "Bearer " + accessToken)
-                       // .body(requestBodyForLoginLogout)
                         .when()
                         .post(endpoint.getPath())
                         .then()
@@ -74,6 +81,36 @@ public class ApiSteps {
                 testContext.scenarioContext.setContext(LOGOUT, logoutResponse);
             }
             break;
+            case GET_USER_PROFILE: {
+                Response loginResponse = (Response) testContext.scenarioContext.getContext(LOGIN);
+                String accessToken = loginResponse.jsonPath().getString("token");
+                testContext.scenarioContext.setContext(TOKEN, accessToken);
+
+                Response userProfileResponse = given()
+                        .header("Authorization", "Bearer " + accessToken)
+                        .when()
+                        .get(endpoint.getPath())
+                        .then()
+                        .extract().response();
+
+                logger.info("User Profile details: " + userProfileResponse.print());
+                testContext.scenarioContext.setContext(USER_PROFILE, userProfileResponse);
+            }
+            break;
+            case UPDATE_USER: {
+                String token = (String) testContext.scenarioContext.getContext(TOKEN);
+
+                Response userProfileUpdatedResponse = given()
+                        .header("Authorization", "Bearer " + token)
+                        .body(requestBodyForUpdateUSer)
+                        .when()
+                        .patch(endpoint.getPath())
+                        .then()
+                        .extract().response();
+
+                logger.info("User Profile was updated!  " + userProfileUpdatedResponse.print());
+                testContext.scenarioContext.setContext(UPDATED_USER_PROFILE, userProfileUpdatedResponse);
+            }
         }
     }
 
@@ -106,4 +143,14 @@ public class ApiSteps {
         }
     }
 
+    @Then("the user profile is updated successfully")
+    public void theUserProfileIsUpdatedSuccessfully() {
+        Response response = (Response) testContext.scenarioContext.getContext(UPDATED_USER_PROFILE);
+        String newFirstName = response.jsonPath().getString("firstName");
+
+        logger.info("User is updated successfully: " + response.getStatusCode() + " The new user firstName is: " + newFirstName);
+
+        assertTrue(requestBodyForUpdateUSer.contains(newFirstName));
+        assertEquals(HttpStatus.SC_OK, response.getStatusCode());
+    }
 }

@@ -15,5 +15,8 @@ public enum DataKeys implements Key {
     POSTAL_CODE,
     COUNTRY,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    TOKEN,
+    USER_PROFILE,
+    UPDATED_USER_PROFILE
 }
