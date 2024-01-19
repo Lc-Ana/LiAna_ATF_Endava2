@@ -1,4 +1,4 @@
-@Registration @Regression
+@UI @Registration @Regression
 Feature: User is able to register or cancel the process of registration on the portal
 
   Scenario: Registration with valid data

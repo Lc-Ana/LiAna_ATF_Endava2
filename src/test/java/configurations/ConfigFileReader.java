@@ -69,20 +69,26 @@ public class ConfigFileReader {
         return 35;
     }
 
-    public String getDashboardURLEndpoint(){
+    public String getDashboardURLEndpoint() {
         String dashboardURLEndpoint = properties.getProperty("dashboardURLEndpoint");
         if (dashboardURLEndpoint != null) return dashboardURLEndpoint;
         else
             throw new RuntimeException("Dashboard Url not specified in the Config.properties file for the key : dashboardURL");
     }
 
-    public String getUser(){
+    public String getUser() {
         String user = properties.getProperty("user");
         return user;
     }
-    public String getPassword(){
+
+    public String getPassword() {
         String password = properties.getProperty("password");
         return password;
+    }
+
+    public String getBaseUrl() {
+        String baseUrl = properties.getProperty("baseUrl");
+        return baseUrl;
     }
 
 }

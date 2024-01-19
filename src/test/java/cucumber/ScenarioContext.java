@@ -1,7 +1,5 @@
 package cucumber;
 
-import enums.Context;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,15 +10,15 @@ public class ScenarioContext {
         scenarioContext = new HashMap<>();
     }
 
-    public void setContext(Context key, Object value) {
+    public void setContext(DataKeys key, Object value) {
         scenarioContext.put(key.toString(), value);
     }
 
-    public Object getContext(Context key){
+    public Object getContext(DataKeys key){
         return scenarioContext.get(key.toString());
     }
 
-    public Boolean isContains(Context key){
+    public Boolean isContains(DataKeys key){
         return scenarioContext.containsKey(key.toString());
     }
     
