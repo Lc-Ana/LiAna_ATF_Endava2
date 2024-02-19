@@ -7,19 +7,18 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import static cucumber.DataKeys.*;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 public class ApiSteps {
 
     static TestContext testContext;
-    private static final Logger logger = LogManager.getLogger(ApiSteps.class);
 
     public ApiSteps(TestContext context) {
         testContext = context;
@@ -49,7 +48,7 @@ public class ApiSteps {
                         .post(endpoint.getPath())
                         .then()
                         .extract().response();
-                logger.info("Request body sent to create user: " + userCreationResponse.print());
+                log.info("Request body sent to create user: " + userCreationResponse.print());
                 testContext.scenarioContext.setContext(USER, userCreationResponse);
             }
             break;
@@ -61,7 +60,7 @@ public class ApiSteps {
                         .then()
                         .extract().response();
 
-                logger.info("User is logging in with following credentials: " + loginResponse.print());
+                log.info("User is logging in with following credentials: " + loginResponse.print());
                 testContext.scenarioContext.setContext(LOGIN, loginResponse);
             }
             break;
@@ -77,7 +76,7 @@ public class ApiSteps {
                         .then()
                         .extract().response();
 
-                logger.info("User is logging out with following credentials: " + logoutResponse.print());
+                log.info("User is logging out with following credentials: " + logoutResponse.print());
                 testContext.scenarioContext.setContext(LOGOUT, logoutResponse);
             }
             break;
@@ -93,7 +92,7 @@ public class ApiSteps {
                         .then()
                         .extract().response();
 
-                logger.info("User Profile details: " + userProfileResponse.print());
+                log.info("User Profile details: " + userProfileResponse.print());
                 testContext.scenarioContext.setContext(USER_PROFILE, userProfileResponse);
             }
             break;
@@ -108,7 +107,7 @@ public class ApiSteps {
                         .then()
                         .extract().response();
 
-                logger.info("User Profile was updated!  " + userProfileUpdatedResponse.print());
+                log.info("User Profile was updated!  " + userProfileUpdatedResponse.print());
                 testContext.scenarioContext.setContext(UPDATED_USER_PROFILE, userProfileUpdatedResponse);
             }
         }
@@ -117,7 +116,7 @@ public class ApiSteps {
     @Then("an account is created successfully")
     public void receiveResponseCode() {
         Response response = (Response) testContext.scenarioContext.getContext(USER);
-        logger.info("User is created successfully: " + response.getStatusCode());
+        log.info("User is created successfully: " + response.getStatusCode());
         assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());
 
         //what about Hooks and @AfterAll tag???
@@ -130,13 +129,13 @@ public class ApiSteps {
         switch (option) {
             case "in": {
                 Response response = (Response) testContext.scenarioContext.getContext(LOGIN);
-                logger.info("User is logged in successfully: " + response.getStatusCode());
+                log.info("User is logged in successfully: " + response.getStatusCode());
                 assertEquals(HttpStatus.SC_OK, response.getStatusCode());
             }
             break;
             case "out": {
                 Response response = (Response) testContext.scenarioContext.getContext(LOGOUT);
-                logger.info("User is logged out successfully: " + response.getStatusCode() + response.print());
+                log.info("User is logged out successfully: " + response.getStatusCode() + response.print());
                 assertEquals(HttpStatus.SC_OK, response.getStatusCode());
             }
             break;
@@ -148,7 +147,7 @@ public class ApiSteps {
         Response response = (Response) testContext.scenarioContext.getContext(UPDATED_USER_PROFILE);
         String newFirstName = response.jsonPath().getString("firstName");
 
-        logger.info("User is updated successfully: " + response.getStatusCode() + " The new user firstName is: " + newFirstName);
+        log.info("User is updated successfully: " + response.getStatusCode() + " The new user firstName is: " + newFirstName);
 
         assertTrue(requestBodyForUpdateUSer.contains(newFirstName));
         assertEquals(HttpStatus.SC_OK, response.getStatusCode());

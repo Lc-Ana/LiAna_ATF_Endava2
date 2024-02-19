@@ -1,21 +1,19 @@
 package steps;
 
 import cucumber.TestContext;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import pageObjects.LoginPage;
 import pageObjects.RegistrationPage;
 
 import java.io.IOException;
 
+@Slf4j
 public class RegistrationSteps {
     TestContext testContext;
     RegistrationPage registrationPage;
     LoginPage loginPage;
-    private static final Logger logger = LogManager.getLogger(LoginSteps.class);
 
     public RegistrationSteps(TestContext context) {
         testContext = context;
@@ -25,19 +23,19 @@ public class RegistrationSteps {
 
     @When("he clicks on Sign up button")
     public void clickOnSignUpButton() {
-        logger.info("User clicks Submit Button");
+        log.info("User clicks Submit Button");
         loginPage.clickOnSubmitButton();
     }
 
     @When("fills up the form")
     public void fillTheForm() throws IOException, ParseException {
-        logger.info("User fills the form");
+        log.info("User fills the form");
         registrationPage.fillTheForm();
     }
 
     @When("clicks on Submit button")
     public void submitTheForm() {
-        logger.info("User clicks on Submit Button");
+        log.info("User clicks on Submit Button");
         registrationPage.submitButton();
     }
 }
