@@ -1,8 +1,11 @@
 package database;
 
-import groovy.util.logging.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 @Slf4j
 public class DbConnection {
@@ -17,7 +20,7 @@ public class DbConnection {
     private final Connection connection;
 
     private DbConnection() {
-        System.out.println("Db connection...");
+        System.out.println("Db connection is starting...");
         connection = createConnection();
     }
 
@@ -31,12 +34,12 @@ public class DbConnection {
     public Connection createConnection() {
         Connection connection = null;
         try {
-            Class driver_class = Class.forName(driver);
-            Driver driver = (Driver) driver_class.newInstance();
-            DriverManager.registerDriver(driver);
-            connection = DriverManager.getConnection(url + dbName + password);
+            Class.forName(driver);
+            connection = DriverManager.getConnection(
+                    url.concat(dbName), userName, password);
         } catch (Exception exception) {
-            System.out.println(exception);
+            log.info("Getting an error creating db connection");
+            log.info(exception.getMessage());
         }
         return connection;
     }
@@ -49,13 +52,13 @@ public class DbConnection {
             resultSet = statement.executeQuery(
                     "select * from Employeeinfo");
 
-            String name;
-            int id;
-            String location;
-            int age;
+            String name, location;
+            int id, age;
+
+            System.out.println("Retrieved data -->");
             while (resultSet.next()) {
-                name = resultSet.getString("name");
                 id = resultSet.getInt("id");
+                name = resultSet.getString("name");
                 location = resultSet.getString("location").trim();
                 age = resultSet.getInt("age");
                 System.out.println("Name:" + name
@@ -67,7 +70,8 @@ public class DbConnection {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            e.getMessage();
+            log.info("Getting an error to retrieve data");
+            log.info(e.getMessage());
         }
     }
 
