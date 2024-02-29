@@ -5,18 +5,17 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.extern.slf4j.Slf4j;
 import managers.FileReaderManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import pageObjects.LoginPage;
 
 import java.util.List;
 
+@Slf4j
 public class LoginSteps {
     TestContext testContext;
     LoginPage loginPage;
-    private static final Logger logger = LogManager.getLogger(LoginSteps.class);
 
     public LoginSteps(TestContext context) {
         testContext = context;
@@ -25,32 +24,32 @@ public class LoginSteps {
 
     @Given("user is on LoginPage")
     public void user_is_on_login_page() {
-        logger.info("User is on LoginPage");
+        log.info("User is on LoginPage");
         loginPage.navigateToLoginPage();
     }
 
     @When("he enters credentials")
     public void entersCredentials(DataTable table) {
         List<List<String>> data = table.asLists();
-        logger.info("User enters credentials");
+        log.info("User enters credentials");
         loginPage.fillUsernamePasswordForm(data.get(0).get(0), data.get(0).get(1));
     }
 
     @When("clicks on login button")
     public void clicks_on_login_button() {
-        logger.info("User clicks on login button");
+        log.info("User clicks on login button");
         loginPage.clickLoginButton();
     }
 
     @Then("user is redirected on LoginPage")
     public void isRedirectedToLoginPage() {
-        logger.info("User is redirected on LoginPage");
+        log.info("User is redirected on LoginPage");
         testContext.getWebDriverManager().getDriver().getCurrentUrl();
     }
 
     @When("he enters invalid {} or {}")
     public void enterInvalidCredentials(String username, String password) throws InterruptedException{
-        logger.info("User enters invalid credentials");
+        log.info("User enters invalid credentials");
         loginPage.fillUsernamePasswordForm(username, password);
         loginPage.clickLoginButton();
         Thread.sleep(1000);
@@ -60,13 +59,13 @@ public class LoginSteps {
     public void userReceivesAnError()  {
         String expectedLoginError = "Incorrect username or password";
         String actualLoginError = loginPage.getLoginError().getText();
-        logger.info("User receives an error.");
+        log.info("User receives an error.");
         Assertions.assertEquals(actualLoginError, expectedLoginError, "Error messages do not match.");
     }
 
     @Given("user is logged in")
     public void userIsLogged() throws InterruptedException {
-        logger.info("User is logged in the app");
+        log.info("User is logged in the app");
         loginPage.navigateToLoginPage();
         loginPage.fillUsernamePasswordForm(FileReaderManager.getInstance().getConfigReader().getUser(),
                 FileReaderManager.getInstance().getConfigReader().getPassword() );
