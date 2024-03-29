@@ -12,72 +12,90 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lombok.version>1.18.32</lombok.version>
+        <cucumber-java.version>7.14.0</cucumber-java.version>
+        <cucumber-junit.version>7.14.0</cucumber-junit.version>
+        <selenium.version>4.13.0</selenium.version>
+        <cucumber-picocontainer.version>7.13.0</cucumber-picocontainer.version>
+        <slf4j-api.version>2.0.12</slf4j-api.version>
+        <slf4j-simple.version>1.7.21</slf4j-simple.version>
+        <fasterxml-jackson.version>2.15.2</fasterxml-jackson.version>
+        <json-simple.version>1.1</json-simple.version>
+        <commons-io.version>2.15.0</commons-io.version>
+        <rest-assured.version>5.3.2</rest-assured.version>
+        <junit-jupiter.version>5.10.0</junit-jupiter.version>
+        <mysql-connector.version>8.3.0</mysql-connector.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.14.0</version>
+            <version>${cucumber-java.version}</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>7.14.0</version>
+            <version>${cucumber-junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.13.0</version>
+            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
-            <version>7.13.0</version>
+            <version>${cucumber-picocontainer.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.12</version>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
-            <scope>provided</scope>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.15.2</version>
+            <version>${fasterxml-jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
-            <version>1.1</version>
+            <version>${json-simple.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.15.0</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>5.3.2</version>
+            <version>${rest-assured.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.3.0</version>
+            <version>${mysql-connector.version}</version>
         </dependency>
     </dependencies>
 
