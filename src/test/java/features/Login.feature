@@ -1,6 +1,7 @@
-@Login @Regression
+@UI @Login @Regression
 Feature: Login with valid & invalid credentials
 
+  @Run
   Scenario: Login with valid credentials
     Given user is on LoginPage
     When he enters credentials

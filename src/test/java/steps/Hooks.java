@@ -21,21 +21,22 @@ public class Hooks {
         testContext = context;
     }
 
-    @Before(value = "UI")
+    @Before(value = "@UI")
     public void setup() {
-        log.info("Browser opens");
+        log.info("Browser is opening...");
         testContext.getWebDriverManager().getDriver();
     }
 
-    @After(value = "UI")
+    @After(value = "@UI")
     public void tearDown() {
-        log.info("Browser is closing");
+        log.info("Browser is closing...");
         testContext.getWebDriverManager().closeDriver();
     }
 
     //Uncomment the lines when needed more info about requests
     @Before(value = "@API")
     public void apiSetup() {
+        log.info("API Tests Setup...");
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(FileReaderManager.getInstance().getConfigReader().getBaseUrl())
                 .setContentType("application/json")
@@ -43,8 +44,6 @@ public class Hooks {
                 //.addFilter(new RequestLoggingFilter())
                 //.addFilter(new ResponseLoggingFilter())
                 .build();
-
-        log.info("API Tests Setup...");
     }
 
     //We need to delete User in order to pass the Scenario CreateUser
